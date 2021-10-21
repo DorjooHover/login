@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const session = require('express-session')
 const flash = require('express-flash')
 const passport = require('passport')
-const db = require('sequelize')
+
 
 
 const initializePassport = require('./passportConfig');
@@ -19,9 +19,6 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }))
 
 app.use(session({
-    store: new(require('connect-pg-simple')(session))({
-
-    }),
     secret: 'secret',
     saveUninitialized: false,
     resave: false,
