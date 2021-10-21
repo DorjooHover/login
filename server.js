@@ -22,15 +22,14 @@ app.use(session({
 
     resave: false,
 
-    saveUninitialized: false
+    saveUninitialized: false,
+
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(function(err, req, res, next) {
-    console.log(err)
-})
+
 app.get('/', (req, res) => {
     res.render('index')
 })
