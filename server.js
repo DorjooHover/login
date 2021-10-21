@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const session = require('express-session')
 const flash = require('express-flash')
 const passport = require('passport')
+const db = require('sequelize')
 
 
 const initializePassport = require('./passportConfig');
@@ -19,12 +20,11 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(session({
     secret: 'secret',
-
-    resave: false,
-
     saveUninitialized: false,
-
+    resave: false,
+    unset: 'destroy',
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -80,10 +80,9 @@ app.post('/users/register', async(req, res) => {
             `SELECT * FROM users
             WHERE email = $1`, [email], (err, results) => {
                 if (err) {
-                    throw err
+                    throw err;
                 }
 
-                console.log(results.rows)
                 if (results.rows.length > 0) {
                     errors.push({ message: 'Email already registered' })
                     res.render('register', { errors })
@@ -127,5 +126,5 @@ app.post('/users/login', passport.authenticate('local', {
     failureFlash: true,
 }))
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-})
+    console.log('Web server started at port 8000!');
+});
