@@ -7,7 +7,6 @@ const flash = require('express-flash')
 const passport = require('passport')
 
 
-
 const initializePassport = require('./passportConfig');
 
 initializePassport(passport)
@@ -118,3 +117,4 @@ app.post('/users/login', passport.authenticate('local', {
     failureRedirect: '/users/login',
     failureFlash: true,
 }))
+app.listen(PORT)
