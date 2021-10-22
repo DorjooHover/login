@@ -51,14 +51,7 @@ app.get('/users/logout', (req, res) => {
 
 app.post('/users/register', async(req, res) => {
     let { name, email, password, password2 } = req.body;
-    console.log({
-        name,
-        email,
-        password,
-        password2
-    })
     let errors = [];
-    console.log(errors)
     if (!name || !email || !password || !password2) {
         errors.push({ message: "Please enter all fields" })
     }
@@ -69,6 +62,7 @@ app.post('/users/register', async(req, res) => {
         errors.push({ message: "Passwords do not match" })
     }
     if (errors.length > 0) {
+
         res.render('register', {
             errors
         })
@@ -76,7 +70,6 @@ app.post('/users/register', async(req, res) => {
         //Form validation has passed
 
         let hashedPassword = await bcrypt.hash(password, 10);
-        console.log(pool)
         pool.query(
             `SELECT * FROM users
             WHERE email = $1`, [email], (err, results) => {
@@ -95,7 +88,6 @@ app.post('/users/register', async(req, res) => {
                             if (err) {
                                 throw err
                             }
-                            console.log(results.rows)
                             req.flash('success_msg', "You are now registered. Please log in");
                             res.redirect('/users/login')
                         }
@@ -126,6 +118,3 @@ app.post('/users/login', passport.authenticate('local', {
     failureRedirect: '/users/login',
     failureFlash: true,
 }))
-app.listen(PORT, () => {
-    console.log('Web server started at port 8000!');
-});
