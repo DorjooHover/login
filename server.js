@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const session = require('express-session')
 const flash = require('express-flash')
 const passport = require('passport')
+var http = require('http');
 
 
 const initializePassport = require('./passportConfig');
@@ -117,4 +118,8 @@ app.post('/users/login', passport.authenticate('local', {
     failureRedirect: '/users/login',
     failureFlash: true,
 }))
-app.listen(PORT)
+http.createServer(function(req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World\n');
+}).listen(PORT);
+console.log('Server running at http://127.0.0.1:1337/');
