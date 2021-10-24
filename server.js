@@ -11,7 +11,7 @@ const initializePassport = require('./passportConfig');
 
 initializePassport(passport)
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 1337;
 
 
 app.set('view engine', 'ejs');
