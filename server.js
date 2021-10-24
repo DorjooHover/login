@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const { pool } = require('./dbConfig');
 const bcrypt = require('bcrypt')
-const session = require('cookie-session')
+const session = require('express-session')
 const flash = require('express-flash')
 const passport = require('passport')
 
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(session({
     adapter: "connect-pg-simple",
-    secret: 'secret',
+    secret: process.env.SESSION_SECRET = 'secret',
     saveUninitialized: false,
     resave: false,
     unset: 'destroy',
